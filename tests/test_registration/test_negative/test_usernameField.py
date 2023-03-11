@@ -5,6 +5,8 @@ from selenium.common.exceptions import NoSuchElementException
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'data')))
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 import allure
 import pytest
 from selenium import webdriver
@@ -27,7 +29,7 @@ class Test_Username_field_validation:
     def setup(self):
         options = webdriver.ChromeOptions()
         options.add_argument('--headless') #comment to open in browser
-        self.driver = webdriver.Chrome(options=options)
+        self.driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
         self.driver.get(url + 'user/register')
         self.driver.implicitly_wait(10)
         self.driver.maximize_window()
